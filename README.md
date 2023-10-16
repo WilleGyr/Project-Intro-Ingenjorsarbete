@@ -1,5 +1,5 @@
 ## Planering
-- [ ] blah blah
+- [x] blah blah
 - [ ] blah blah
 
 ## Länkar
