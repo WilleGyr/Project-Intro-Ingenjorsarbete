@@ -2,9 +2,6 @@
 - [x] blah blah
 - [ ] blah blah
 
-|Klar| Uppgift | Beskrivning |
-- [ ]|----|-----------|-------------|
-- [ ]||
 
 # Modules
 ### Main
