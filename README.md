@@ -6,6 +6,6 @@
 - blah blah
 
 # Modules
-  ## Main
+   Main
     - blah
   ## Blah blah
