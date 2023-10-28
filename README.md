@@ -1,11 +1,11 @@
-## Planering
+# Planering
 - [x] blah blah
 - [ ] blah blah
 
-## Länkar
+# Länkar
 - blah blah
 
-## Modules
-# Main
+# Modules
+## Main
 - blah
-# Blah blah
+## Blah blah
