@@ -19,6 +19,10 @@
 - [ ] Player
   - [ ] Movement
   - [ ] Gun
+_Optional_
+  - [ ] Music
+  - [ ] SFX
+  - [ ] Animations
 
 # Länkar
 - Miro https://miro.com/app/board/uXjVNUztPuM=/
