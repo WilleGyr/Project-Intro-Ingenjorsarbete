@@ -1,4 +1,4 @@
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/WilleGyr/Project-Intro-Ingenjorsarbete)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/WilleGyr/Project-Intro-Ingenjorsarbete?label=Total%20Commits&color=orange)
 
 # Planering
 - [x] blah blah
