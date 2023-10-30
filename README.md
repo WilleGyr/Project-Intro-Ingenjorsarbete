@@ -13,9 +13,12 @@
   - [ ] Level 2
   - [ ] Level 3
 - [ ] Enemies
+  - [ ] Enemy 1
+  - [ ] Enemy 2
 - [ ] Boss
 - [ ] Player
-- [ ] Movement
+  - [ ] Movement
+  - [ ] Gun
 
 # Länkar
 - Miro https://miro.com/app/board/uXjVNUztPuM=/
