@@ -7,7 +7,7 @@
 - **Enemies** (Jakub)
 
 # Planering
-- [ ] Test map
+- [x] Test map
 - [ ] Map
   - [ ] Level 1
   - [ ] Level 2
