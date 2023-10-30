@@ -8,7 +8,7 @@
 
 # Planering
 - [ ] Test map
-- Map
+- [ ] Map
   - [ ] Level 1
   - [ ] Level 2
   - [ ] Level 3
