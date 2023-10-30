@@ -19,7 +19,7 @@
 - [ ] Player
   - [ ] Movement
   - [ ] Gun
-## _Optional_
+### _Optional_
   - [ ] Music
   - [ ] SFX
   - [ ] Animations
