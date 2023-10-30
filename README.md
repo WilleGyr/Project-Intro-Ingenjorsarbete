@@ -27,4 +27,4 @@
 
 # Länkar
 - [Miro](https://miro.com/app/board/uXjVNUztPuM=/)
-- [YT Video]()
+- [YT Video](https://www.youtube.com/watch?v=2gABYM5M0ww&t=4234s)
