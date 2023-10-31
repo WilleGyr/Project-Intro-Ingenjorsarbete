@@ -1,6 +1,7 @@
 import sys
 import json
 import pygame
+from scripts.tilemap import Tilemap
 
 class Game:
     def __init__(self, path):
