@@ -29,4 +29,4 @@
 - [Miro](https://miro.com/app/board/uXjVNUztPuM=/)
 - [Avancerad](https://www.youtube.com/watch?v=2gABYM5M0ww&t=4234s)
 - [Simpel](https://www.youtube.com/playlist?list=PLjcN1EyupaQnHM1I9SmiXfbT6aG4ezUvu)
-![image](https://github.com/WilleGyr/Project-Intro-Ingenjorsarbete/assets/37251199/08ad2be0-9cf2-4528-973c-dafb22f9ff9e)
+![image](https://github.com/WilleGyr/Project-Intro-Ingenjorsarbete/assets/37251199/08ad2be0-9cf2-4528-973c-dafb22f9ff9e = 256x144)
