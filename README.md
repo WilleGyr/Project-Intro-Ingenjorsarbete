@@ -8,7 +8,6 @@
 
 # Planering
 - [x] Test map
-- [x] Map editor
 - [ ] Map
   - [ ] Level 1
   - [ ] Level 2
