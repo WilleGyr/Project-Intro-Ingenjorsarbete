@@ -1,4 +1,4 @@
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/WilleGyr/Project-Intro-Ingenjorsarbete?label=Total%20commits&color=orange) ![GitHub Contributors](https://img.shields.io/github/contributors/WilleGyr/Project-Intro-Ingenjorsarbete?label=Contributors&color=darkgreen) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) ![GitHub repo size](https://img.shields.io/github/repo-size/WilleGyr/Project-Intro-Ingenjorsarbete?label=Repo%20size)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/WilleGyr/Project-Intro-Ingenjorsarbete?label=Total%20commits&color=orange) ![GitHub Contributors](https://img.shields.io/github/contributors/WilleGyr/Project-Intro-Ingenjorsarbete?label=Contributors&color=darkgreen) [![made-with-python](https://img.shields.io/badge/Language-Python-1f425f.svg)](https://www.python.org/) ![GitHub repo size](https://img.shields.io/github/repo-size/WilleGyr/Project-Intro-Ingenjorsarbete?label=Repo%20size)
 
 
 
