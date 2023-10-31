@@ -19,6 +19,9 @@ class Game:
         self.tile_size = map_data['tile_size']
         self.offgrid_tiles = map_data['offgrid']
         
+        self.tilemap = Tilemap(self, tile_size=16)
+        self.tilemap.load('map_editor/map.json')
+        
     def run(self):
         while True:
             for event in pygame.event.get():
