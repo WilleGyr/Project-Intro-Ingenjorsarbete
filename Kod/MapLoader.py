@@ -189,16 +189,16 @@ class World():
 
 
 # Imports the tilemaps for every level from json files
-with open ("testmap.json", "r") as file4:
+with open ("tilemaps/testmap.json", "r") as file4:
 	testmap = json.load(file4)
 
-with open ("level1.json", "r") as file1:
+with open ("tilemaps/level1.json", "r") as file1:
 	level1 = json.load(file1)
 	
-with open ("level2.json", "r") as file2:
+with open ("tilemaps/level2.json", "r") as file2:
 	level2 = json.load(file2)
 
-with open ("level3.json", "r") as file3:
+with open ("tilemaps/level3.json", "r") as file3:
 	level3 = json.load(file3)
 
 # Imports the background image
