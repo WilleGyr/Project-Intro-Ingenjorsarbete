@@ -8,10 +8,10 @@
 
 # Planering
 - [x] Test map
-- [ ] Map
-  - [ ] Level 1
-  - [ ] Level 2
-  - [ ] Level 3
+- [x] Map
+  - [x] Level 1
+  - [x] Level 2
+  - [x] Level 3
 - [ ] Enemies
   - [ ] Enemy 1
   - [ ] Enemy 2
