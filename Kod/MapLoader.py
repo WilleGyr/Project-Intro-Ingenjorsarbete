@@ -25,6 +25,9 @@ class World():
 		crate_img = pygame.image.load('Data_files/images/tiles/decor/3.png')
 		flower1_img = pygame.image.load('Data_files/images/tiles/decor/2.png')
 		rock_img = pygame.image.load('Data_files/images/tiles/large_decor/0.png')
+		level1_img = pygame.image.load('Data_files/images/border_level1.png')
+		level2_img = pygame.image.load('Data_files/images/border_level2.png')
+		level3_img = pygame.image.load('Data_files/images/border_level3.png')
 		
 
 		row_count = 0
@@ -161,6 +164,27 @@ class World():
 					self.tile_list.append(tile)
 				if tile == 17:
 					img = pygame.transform.scale(dirt_r_img, (tile_size, tile_size))
+					img_rect = img.get_rect()
+					img_rect.x = col_count * tile_size
+					img_rect.y = row_count * tile_size
+					tile = (img, img_rect)
+					self.tile_list.append(tile)
+				if tile == 18:
+					img = pygame.transform.scale(level1_img, (tile_size+100, tile_size))
+					img_rect = img.get_rect()
+					img_rect.x = col_count * tile_size
+					img_rect.y = row_count * tile_size
+					tile = (img, img_rect)
+					self.tile_list.append(tile)
+				if tile == 19:
+					img = pygame.transform.scale(level2_img, (tile_size+100, tile_size))
+					img_rect = img.get_rect()
+					img_rect.x = col_count * tile_size
+					img_rect.y = row_count * tile_size
+					tile = (img, img_rect)
+					self.tile_list.append(tile)
+				if tile == 20:
+					img = pygame.transform.scale(level3_img, (tile_size+100, tile_size))
 					img_rect = img.get_rect()
 					img_rect.x = col_count * tile_size
 					img_rect.y = row_count * tile_size
