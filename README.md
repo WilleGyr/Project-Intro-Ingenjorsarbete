@@ -1,4 +1,5 @@
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/WilleGyr/Project-Intro-Ingenjorsarbete?label=Total%20commits&color=%2313A15C) ![GitHub Contributors](https://img.shields.io/github/contributors/WilleGyr/Project-Intro-Ingenjorsarbete?label=Contributors&color=%23A95F24) [![made-with-python](https://img.shields.io/badge/Language-Python%203.12-1f425f.svg?logo=python)](https://www.python.org/)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/WilleGyr/Project-Intro-Ingenjorsarbete?label=Total%20commits&color=%2313A15C) ![GitHub Contributors](https://img.shields.io/github/contributors/WilleGyr/Project-Intro-Ingenjorsarbete?label=Contributors&color=%23A95F24) [![made-with-python](https://img.shields.io/badge/Language-Python%203.12-1f425f.svg?logo=python)](https://www.python.org/) ![GitHub repo size](https://img.shields.io/github/repo-size/WilleGyr/Project-Intro-Ingenjorsarbete)
+
 
 
 # Uppdelning
