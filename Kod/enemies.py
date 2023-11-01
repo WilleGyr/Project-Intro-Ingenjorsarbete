@@ -1,8 +1,7 @@
 import pygame
 
 class Enemy:
-    def __init__(self, game, e_type, pos, size, speed, shoots, spawns):
-        self.game = game
+    def __init__(self, e_type, pos, size, speed, shoots, spawns):
         self.type = e_type
         self.pos = list(pos)
         self.size = size
@@ -14,7 +13,6 @@ class Enemy:
         if self.type == 1:
             pygame.draw.circle(surf, (0, 0, 255), (250, 250), 75)
         elif self.type == 2:
-            pass
+            pygame.draw.circle(surf, (0, 255, 0), (500, 250), 75)
         else:
-            pass
-        surf.blit(self.game.assets["player"], self.pos)
+            pygame.draw.circle(surf, (255, 0, 0), (750, 250), 75)
