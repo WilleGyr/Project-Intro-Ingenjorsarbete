@@ -6,6 +6,7 @@ class World():
 	def __init__(self, data):
 		tile_size = 20
 		self.tile_list = []
+		self.solid_list = []
 
 		# Imports selected images
 		dirt_img = pygame.image.load('Data_files/images/tiles/grass/5.png')
@@ -55,7 +56,7 @@ class World():
 					
 					# Adds the tile to the tile list
 					self.tile_list.append(tile)
-					
+					self.solid_list.append((img_rect.x, img_rect.y))
 					# Repeats for every image
 				if tile == 2:
 					img = pygame.transform.scale(grass_img, (tile_size, tile_size))
@@ -64,6 +65,7 @@ class World():
 					img_rect.y = row_count * tile_size
 					tile = (img, img_rect)
 					self.tile_list.append(tile)
+					self.solid_list.append((img_rect.x, img_rect.y))
 				if tile == 3:
 					img = pygame.transform.scale(grass_r_img, (tile_size, tile_size))
 					img_rect = img.get_rect()
@@ -71,6 +73,7 @@ class World():
 					img_rect.y = row_count * tile_size
 					tile = (img, img_rect)
 					self.tile_list.append(tile)
+					self.solid_list.append((img_rect.x, img_rect.y))
 				if tile == 4:
 					img = pygame.transform.scale(grass_l_img, (tile_size, tile_size))
 					img_rect = img.get_rect()
@@ -78,6 +81,7 @@ class World():
 					img_rect.y = row_count * tile_size
 					tile = (img, img_rect)
 					self.tile_list.append(tile)
+					self.solid_list.append((img_rect.x, img_rect.y))
 				if tile == 5:
 					img = pygame.transform.scale(dirt_img, (tile_size, tile_size))
 					img_rect = img.get_rect()
@@ -92,6 +96,7 @@ class World():
 					img_rect.y = row_count * tile_size
 					tile = (img, img_rect)
 					self.tile_list.append(tile)
+					self.solid_list.append((img_rect.x, img_rect.y))
 				if tile == 7:
 					img = pygame.transform.scale(stone_r_img, (tile_size, tile_size))
 					img_rect = img.get_rect()
@@ -99,6 +104,7 @@ class World():
 					img_rect.y = row_count * tile_size
 					tile = (img, img_rect)
 					self.tile_list.append(tile)
+					self.solid_list.append((img_rect.x, img_rect.y))
 				if tile == 8:
 					img = pygame.transform.scale(stone_t_img, (tile_size, tile_size))
 					img_rect = img.get_rect()
@@ -106,6 +112,7 @@ class World():
 					img_rect.y = row_count * tile_size
 					tile = (img, img_rect)
 					self.tile_list.append(tile)
+					self.solid_list.append((img_rect.x, img_rect.y))
 				if tile == 9:
 					img = pygame.transform.scale(stone_img, (tile_size, tile_size))
 					img_rect = img.get_rect()
@@ -162,6 +169,7 @@ class World():
 					img_rect.y = row_count * tile_size
 					tile = (img, img_rect)
 					self.tile_list.append(tile)
+					self.solid_list.append((img_rect.x, img_rect.y))
 				if tile == 17:
 					img = pygame.transform.scale(dirt_r_img, (tile_size, tile_size))
 					img_rect = img.get_rect()
@@ -169,6 +177,7 @@ class World():
 					img_rect.y = row_count * tile_size
 					tile = (img, img_rect)
 					self.tile_list.append(tile)
+					self.solid_list.append((img_rect.x, img_rect.y))
 				if tile == 18:
 					img = pygame.transform.scale(level1_img, (tile_size+100, tile_size))
 					img_rect = img.get_rect()
@@ -192,6 +201,9 @@ class World():
 					self.tile_list.append(tile)
 				col_count += 1
 			row_count += 1
+
+	def return_list(self):
+		return self.solid_list
 
 	def draw(self, game):
 		# Goes through every tile in the tile list

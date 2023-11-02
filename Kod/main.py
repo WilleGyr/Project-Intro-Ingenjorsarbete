@@ -4,6 +4,8 @@ import pygame
 from pygame.locals import *
 from enemies import Enemy
 from MapLoader import World
+import time
+from cloud import Cloud
 # Imports modules and classes from other files
 
 class Game:
@@ -35,18 +37,24 @@ class Game:
         world = World(testmap)       #
         world_level1 = World(level1) #
         world_level2 = World(level2) #
-        world_level3 = World(level3) # Sets worlds as variables using World() class 
+        world_level3 = World(level3) # Sets worlds as variables using World() class s
 
         selectedWorld = world # Selects starting world
+        
+        n = 0
+        k = 0
 
         while True:
             self.screen.blit(bg, (0, 0)) # Sets the bakground image
-            
             selectedWorld.draw(self) # Renders the selected world
-
-            Enemy(1, (50, 50), (8, 15), 5, False, False).render(self.screen) #
-            Enemy(2, (50, 50), (8, 15), 5, False, False).render(self.screen) #  
-            Enemy(3, (50, 50), (8, 15), 5, False, False).render(self.screen) # Test render for enemy.py functionality
+            Cloud.cloud(Cloud(k),self.screen.blit, n, k)
+            if n % 30 == 0:
+                k = 1 - k
+                n = 0
+            n += 1
+            #Enemy(1, (50, 50), (8, 15), 5, False, False).render(self.screen) #
+            #Enemy(2, (50, 50), (8, 15), 5, False, False).render(self.screen) #  
+            #Enemy(3, (50, 50), (8, 15), 5, False, False).render(self.screen) # Test render for enemy.py functionality
 
             for event in pygame.event.get():
 
@@ -66,5 +74,7 @@ class Game:
                         selectedWorld = world
             pygame.display.update()
             self.clock.tick(60)
+
+    
 
 Game()
