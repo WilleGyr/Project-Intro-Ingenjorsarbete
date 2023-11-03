@@ -60,14 +60,6 @@ class Player(pg.sprite.Sprite):
             self.on_ground = True
         else:
             self.vel.y += GRAVITY * dt  # Gravity
-class Block(pg.sprite.Sprite):
-
-    def __init__(self, rect):
-        super().__init__()
-        self.image = pg.Surface(rect.size)
-        self.image.fill(pg.Color('paleturquoise2'))
-        self.rect = rect
-
 class Bullet(pg.sprite.Sprite):
     def __init__(self, pos, direction):
         super().__init__()
