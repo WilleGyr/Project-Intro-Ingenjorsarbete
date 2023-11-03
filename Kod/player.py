@@ -117,9 +117,6 @@ def main():
                 bullets.remove(bullet)
                 all_sprites.remove(bullet)
 
-        # Check for collisions between bullets and enemies
-
-
         screen.fill(GRAY)
         all_sprites.draw(screen)
 
