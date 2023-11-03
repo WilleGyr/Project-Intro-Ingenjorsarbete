@@ -1,5 +1,4 @@
 import pygame as pg
-from MapLoader import World 
 
 pg.init()
 WINDOW_WIDTH, WINDOW_HEIGHT = 800, 600
@@ -59,17 +58,33 @@ class Player(pg.sprite.Sprite):
             self.pos.y = self.rect.y
             self.on_ground = True
         else:
-            self.vel.y += GRAVITY * dt  # Gravity
+            self.vel.y += GRAVITY * dt 
+
 class Bullet(pg.sprite.Sprite):
-    def __init__(self, pos, direction):
+    def __init__(self, pos, direction, damage):
         super().__init__()
         self.image = pg.Surface((10, 5))
         self.image.fill(pg.Color('red'))
         self.rect = self.image.get_rect(topleft=pos)
         self.vel = pg.math.Vector2(400 * direction, 0)
+        self.damage = damage  # Bullet's damage value
 
     def update(self, dt):
         self.rect.x += self.vel.x * dt
+
+class Enemy(pg.sprite.Sprite):
+    def __init__(self, pos, max_health):
+        super().__init__()
+        self.image = pg.Surface((30, 30))
+        self.image.fill(pg.Color('green'))
+        self.rect = self.image.get_rect(topleft=pos)
+        self.health = max_health  # Enemy's health
+        self.max_health = max_health
+
+    def take_damage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            self.kill()  # Remove the enemy when health is zero or less
 
 def main():
     clock = pg.time.Clock()
@@ -79,11 +94,14 @@ def main():
     all_sprites = pg.sprite.Group()
     blocks = pg.sprite.Group()
     bullets = pg.sprite.Group()
+    enemies = pg.sprite.Group()
 
     player = Player((300, 100), blocks)
     all_sprites.add(player)
 
-
+    enemy = Enemy((600, 570), max_health=50)  # Adjust max health as needed
+    all_sprites.add(enemy)
+    enemies.add(enemy)
 
     while not done:
         for event in pg.event.get():
@@ -100,7 +118,7 @@ def main():
                         player.pos.y -= 20
                         player.on_ground = False
                 if event.key == pg.K_f:  # Fire a bullet
-                    bullet = Bullet(player.rect.midright, 1)
+                    bullet = Bullet(player.rect.midright, 1, damage=10)  # Pass damage value
                     bullets.add(bullet)
                     all_sprites.add(bullet)
             elif event.type == pg.KEYUP:
@@ -116,6 +134,12 @@ def main():
             if bullet.rect.right > WINDOW_WIDTH:
                 bullets.remove(bullet)
                 all_sprites.remove(bullet)
+
+        # Check for collisions between bullets and enemies
+        hits = pg.sprite.groupcollide(bullets, enemies, True, False)
+        for bullet, enemy_list in hits.items():
+            for enemy in enemy_list:
+                enemy.take_damage(bullet.damage)  # Call the enemy's take_damage method
 
         screen.fill(GRAY)
         all_sprites.draw(screen)
