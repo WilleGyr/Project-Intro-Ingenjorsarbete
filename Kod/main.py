@@ -54,11 +54,11 @@ class Game:
             self.screen.blit(bg, (0, 0)) # Sets the bakground image 
             selectedWorld.draw(self) # Renders the selected world
 
-            Cloud.cloud(Cloud(k),self.screen.blit, n, k)
-            if n % 30 == 0:
-                k = 1 - k
-                n = 0
-            n += 1
+            #Cloud.cloud(Cloud(k),self.screen.blit, n, k)
+            #if n % 30 == 0:
+            #    k = 1 - k
+            #    n = 0
+            #n += 1
 
             if level_1:
                 Enemy.render_enemy(Enemy(), self.screen, 1, self.loc1)
