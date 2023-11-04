@@ -50,6 +50,12 @@ class Game:
         self.loc1 = [1050, 540]
         self.dir1 = True
 
+        self.loc2 = [950, 480]
+        self.dir2 = True
+
+        self.loc3 = [1050, 440]
+        self.dir3 = True
+
         while True:
             self.screen.blit(bg, (0, 0)) # Sets the bakground image 
             selectedWorld.draw(self) # Renders the selected world
@@ -61,12 +67,49 @@ class Game:
             #n += 1
 
             if level_1:
-                Enemy.render_enemy(Enemy(), self.screen, 1, self.loc1)
+                if self.loc1[0] < 1135 and self.dir1:
+                    self.loc1[0] = self.loc1[0] + 1
+                    Enemy.render_enemy(Enemy(), self.screen, 1, self.loc1, self.dir1)
+                elif self.loc1[0] == 1135 and self.dir1:
+                    self.dir1 = False
+                
+                if self.loc1[0] > 830 and not self.dir1:
+                    self.loc1[0] = self.loc1[0] - 1
+                    Enemy.render_enemy(Enemy(), self.screen, 1, self.loc1, self.dir1)
+                elif self.loc1[0] == 830 and not self.dir1:
+                    self.dir1 = True
+
+                enemy1_col = Enemy.get_hitbox(Enemy(), 1, self.loc1)
 
             elif level_2:
-                Enemy.render_2(Enemy(), self.screen)
+                if self.loc2[0] < 1045 and self.dir2:
+                    self.loc2[0] = self.loc2[0] + 1
+                    Enemy.render_enemy(Enemy(), self.screen, 2, self.loc2, self.dir2)
+                elif self.loc2[0] == 1045 and self.dir2:
+                    self.dir2 = False
+                
+                if self.loc2[0] > 865 and not self.dir2:
+                    self.loc2[0] = self.loc2[0] - 1
+                    Enemy.render_enemy(Enemy(), self.screen, 2, self.loc2, self.dir2)
+                elif self.loc2[0] == 865 and not self.dir2:
+                    self.dir2 = True
+
+                enemy2_col = Enemy.get_hitbox(Enemy(), 2, self.loc2)
+
             else:
-                Enemy.render_3(Enemy(), self.screen)
+                if self.loc3[0] < 1100 and self.dir3:
+                    self.loc3[0] = self.loc3[0] + 1
+                    Enemy.render_enemy(Enemy(), self.screen, 3, self.loc3, self.dir3)
+                elif self.loc3[0] == 1100 and self.dir3:
+                    self.dir3 = False
+                
+                if self.loc3[0] > 955 and not self.dir3:
+                    self.loc3[0] = self.loc3[0] - 1
+                    Enemy.render_enemy(Enemy(), self.screen, 3, self.loc3, self.dir3)
+                elif self.loc3[0] == 955 and not self.dir3:
+                    self.dir3 = True
+
+                enemy3_col = Enemy.get_hitbox(Enemy(), 3, self.loc3)
 
             for event in pygame.event.get():
 
