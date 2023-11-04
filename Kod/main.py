@@ -4,7 +4,6 @@ import pygame
 from pygame.locals import *
 from enemies import Enemy
 from MapLoader import World
-import time
 from cloud import Cloud
 # Imports modules and classes from other files
 
@@ -15,6 +14,10 @@ class Game:
 
         SCREEN_WIDTH = 1280 #
         SCREEN_HEIGHT = 720 # Sets constants
+
+        level_1 = True
+        level_2 = False
+        level_3 = False
 
         bg = pygame.image.load("Data_files/images/himmel.png") # Sets background
 
@@ -37,24 +40,33 @@ class Game:
         world = World(testmap)       #
         world_level1 = World(level1) #
         world_level2 = World(level2) #
-        world_level3 = World(level3) # Sets worlds as variables using World() class s
+        world_level3 = World(level3) # Sets worlds as variables using World() class 
 
         selectedWorld = world # Selects starting world
-        
+
         n = 0
         k = 0
 
+        self.loc1 = [1050, 540]
+        self.dir1 = True
+
         while True:
-            self.screen.blit(bg, (0, 0)) # Sets the bakground image
+            self.screen.blit(bg, (0, 0)) # Sets the bakground image 
             selectedWorld.draw(self) # Renders the selected world
+
             Cloud.cloud(Cloud(k),self.screen.blit, n, k)
             if n % 30 == 0:
                 k = 1 - k
                 n = 0
             n += 1
-            #Enemy(1, (50, 50), (8, 15), 5, False, False).render(self.screen) #
-            #Enemy(2, (50, 50), (8, 15), 5, False, False).render(self.screen) #  
-            #Enemy(3, (50, 50), (8, 15), 5, False, False).render(self.screen) # Test render for enemy.py functionality
+
+            if level_1:
+                Enemy.render_enemy(Enemy(), self.screen, 1, self.loc1)
+
+            elif level_2:
+                Enemy.render_2(Enemy(), self.screen)
+            else:
+                Enemy.render_3(Enemy(), self.screen)
 
             for event in pygame.event.get():
 
@@ -66,15 +78,21 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_1:
                         selectedWorld = world_level1
+                        level_1 = True
+
                     if event.key == pygame.K_2:
                         selectedWorld = world_level2
+                        level_1 = False
+                        level_2 = True
+
                     if event.key == pygame.K_3:
                         selectedWorld = world_level3
+                        level_2 = False
+
                     if event.key == pygame.K_4:
                         selectedWorld = world
+
             pygame.display.update()
             self.clock.tick(60)
-
-    
 
 Game()
