@@ -17,7 +17,6 @@ class Game:
 
         level_1 = True
         level_2 = False
-        level_3 = False
 
         with open ("tilemaps/testmap.json", "r") as file4: 
             testmap = json.load(file4)
@@ -39,13 +38,10 @@ class Game:
 
         with open ("solids/solidsLevel3.json", "r") as file:
             level3Solids = json.load(file)
-        
-        
 
         bg = pg.image.load("Data_files/images/himmel.png") # Sets background
 
         screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        clock = pg.time.Clock()
 
         player_starting_position = (20, 490)
 
@@ -62,20 +58,6 @@ class Game:
         self.clock = pg.time.Clock() # Sets clock to regulate frames per second
         dt = 0
 
-        #print(level1Solids)
-
-        #Lista = (tuple(x) for x in level1Solids)
-
-        """for Lista in level1Solids:
-            x = int(Lista[0])
-            y = int(Lista[1])
-            solid.add(Solids(x, y, 20, 20))"""
-
-        """for x, y in level1Solids:
-            solid.add(Solids(x, y, 20, 20))"""
-
-        #print(solid)
-
         level_solids = [level1Solids, level2Solids, level3Solids]
 
         for level_solid in level_solids:
@@ -83,20 +65,18 @@ class Game:
                 i.append(20)
                 i.append(20)
 
-        """rects = (tuple(x) for x in level1Solids)
+        rects = (tuple(x) for x in level1Solids)
         
         for rect in rects:  # Create the walls/platforms.
             block = Solids(pg.Rect(rect))
             all_sprites.add(block)
-            solids.add(block)"""
+            solids.add(block)
 
-
-        world = World(testmap)       #
-        world_level2 = World(level2) #
         world_level1 = World(level1) #
+        world_level2 = World(level2) #
         world_level3 = World(level3) # Sets worlds as variables using World() class 
 
-        selectedWorld = world # Selects starting world
+        selectedWorld = world_level1 # Selects starting world
 
 
         n = 0
@@ -110,6 +90,10 @@ class Game:
 
         self.loc3 = [1050, 440]
         self.dir3 = True
+
+        enemy1_col = Enemy.get_hitbox(Enemy(), 1, self.loc1)
+        enemy2_col = Enemy.get_hitbox(Enemy(), 2, self.loc2)
+        enemy3_col = Enemy.get_hitbox(Enemy(), 3, self.loc3)
 
 
         while True:
@@ -134,9 +118,6 @@ class Game:
                 elif self.loc1[0] == 830 and not self.dir1:
                     self.dir1 = True
 
-                """enemy1_col = Enemy.get_hitbox(Enemy(), 1, self.loc1)
-                enemy.add(enemy1_col)
-                hits = pg.sprite.groupcollide(bullets, enemy1_col, True, False)"""
             elif level_2:
                 if self.loc2[0] < 1045 and self.dir2:
                     self.loc2[0] = self.loc2[0] + 1
@@ -150,8 +131,6 @@ class Game:
                 elif self.loc2[0] == 865 and not self.dir2:
                     self.dir2 = True
 
-                enemy2_col = Enemy.get_hitbox(Enemy(), 2, self.loc2)
-
             else:
                 if self.loc3[0] < 1100 and self.dir3:
                     self.loc3[0] = self.loc3[0] + 1
@@ -164,8 +143,6 @@ class Game:
                     Enemy.render_enemy(Enemy(), self.screen, 3, self.loc3, self.dir3)
                 elif self.loc3[0] == 955 and not self.dir3:
                     self.dir3 = True
-
-                enemy3_col = Enemy.get_hitbox(Enemy(), 3, self.loc3)
 
 
             for event in pg.event.get():
@@ -228,12 +205,6 @@ class Game:
                             all_sprites.add(block)
                             solids.add(block)
 
-                    if event.key == pg.K_4:
-                        selectedWorld = world
-                        player.pos = pg.math.Vector2(player_starting_position)
-                        player.rect.topleft = player_starting_position
-                        player.vel = pg.math.Vector2(0, 0)
-                        player.on_ground = False
                     if event.key == pg.K_a:
                         player.vel.x = -220
                     elif event.key == pg.K_d:
@@ -254,17 +225,7 @@ class Game:
                         player.vel.x = 0
                     # Remove bullets that go off-scre
             all_sprites.update(dt)
-            
-            """hits = pg.sprite.spritecollide(player, solid, False)
-            for solid in hits:  # Iterate over the collided platforms.
-                if player.vel.y > 0:  # We're falling.
-                    player.rect.bottom = solid.rect.top
-                    player.vel.y = 0
-                elif player.vel.y < 0:  # We're jumping.
-                    player.rect.top = solid.rect.bottom
-                    player.vel.y = 3
 
-                player.pos.y = player.rect.bottom"""
             for bullet in bullets.copy():
                 if bullet.rect.right > SCREEN_WIDTH:
                     bullets.remove(bullet)
