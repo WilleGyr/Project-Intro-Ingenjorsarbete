@@ -1,16 +1,16 @@
 import sys
 import json
-import pygame
+import pygame as pg
 from pygame.locals import *
 from enemies import Enemy
-from MapLoader import World
+from MapLoader import World, Solids
+from player import Player, Bullet
 from cloud import Cloud
-# Imports modules and classes from other files
 
 class Game:
     def __init__(self):
-        pygame.init()                           # Initialises pygame
-        pygame.display.set_caption("Not Mario") # Sets display name 
+        pg.init()                           # Initialises pg
+        pg.display.set_caption("Not Mario") # Sets display name 
 
         SCREEN_WIDTH = 1280 #
         SCREEN_HEIGHT = 720 # Sets constants
@@ -19,12 +19,6 @@ class Game:
         level_2 = False
         level_3 = False
 
-        bg = pygame.image.load("Data_files/images/himmel.png") # Sets background
-
-        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) # Sets window size
-
-        self.clock = pygame.time.Clock() # Sets clock to regulate frames per second
-        
         with open ("tilemaps/testmap.json", "r") as file4: 
             testmap = json.load(file4)
                     
@@ -36,13 +30,74 @@ class Game:
 
         with open ("tilemaps/level3.json", "r") as file3: # Imports the world maps - consider moving to maploader.py?
             level3 = json.load(file3)
+        
+        with open ("solids/solidsLevel1.json", "r") as file:
+            level1Solids = json.load(file)
+
+        with open ("solids/solidsLevel2.json", "r") as file:
+            level2Solids = json.load(file)
+
+        with open ("solids/solidsLevel3.json", "r") as file:
+            level3Solids = json.load(file)
+        
+        
+
+        bg = pg.image.load("Data_files/images/himmel.png") # Sets background
+
+        screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        clock = pg.time.Clock()
+
+        player_starting_position = (20, 490)
+
+        all_sprites = pg.sprite.Group()
+        bullets = pg.sprite.Group()
+        solids = pg.sprite.Group()
+        enemies = pg.sprite.Group()
+        player = Player(player_starting_position, solids)
+        all_sprites.add(player)
+
+
+        self.screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) # Sets window size
+
+        self.clock = pg.time.Clock() # Sets clock to regulate frames per second
+        dt = 0
+
+        #print(level1Solids)
+
+        #Lista = (tuple(x) for x in level1Solids)
+
+        """for Lista in level1Solids:
+            x = int(Lista[0])
+            y = int(Lista[1])
+            solid.add(Solids(x, y, 20, 20))"""
+
+        """for x, y in level1Solids:
+            solid.add(Solids(x, y, 20, 20))"""
+
+        #print(solid)
+
+        level_solids = [level1Solids, level2Solids, level3Solids]
+
+        for level_solid in level_solids:
+            for i in level_solid:
+                i.append(20)
+                i.append(20)
+
+        """rects = (tuple(x) for x in level1Solids)
+        
+        for rect in rects:  # Create the walls/platforms.
+            block = Solids(pg.Rect(rect))
+            all_sprites.add(block)
+            solids.add(block)"""
+
 
         world = World(testmap)       #
-        world_level1 = World(level1) #
         world_level2 = World(level2) #
+        world_level1 = World(level1) #
         world_level3 = World(level3) # Sets worlds as variables using World() class 
 
         selectedWorld = world # Selects starting world
+
 
         n = 0
         k = 0
@@ -56,10 +111,10 @@ class Game:
         self.loc3 = [1050, 440]
         self.dir3 = True
 
+
         while True:
             self.screen.blit(bg, (0, 0)) # Sets the bakground image 
             selectedWorld.draw(self) # Renders the selected world
-
             #Cloud.cloud(Cloud(k),self.screen.blit, n, k)
             #if n % 30 == 0:
             #    k = 1 - k
@@ -79,8 +134,9 @@ class Game:
                 elif self.loc1[0] == 830 and not self.dir1:
                     self.dir1 = True
 
-                enemy1_col = Enemy.get_hitbox(Enemy(), 1, self.loc1)
-
+                """enemy1_col = Enemy.get_hitbox(Enemy(), 1, self.loc1)
+                enemy.add(enemy1_col)
+                hits = pg.sprite.groupcollide(bullets, enemy1_col, True, False)"""
             elif level_2:
                 if self.loc2[0] < 1045 and self.dir2:
                     self.loc2[0] = self.loc2[0] + 1
@@ -111,31 +167,116 @@ class Game:
 
                 enemy3_col = Enemy.get_hitbox(Enemy(), 3, self.loc3)
 
-            for event in pygame.event.get():
 
-                if event.type == pygame.QUIT: # Exits the application if the window close button is pressed
-                    pygame.quit()
+            for event in pg.event.get():
+
+                if event.type == pg.QUIT: # Exits the application if the window close button is pressed
+                    pg.quit()
                     sys.exit()
                     
                 # Changes the map between level 1, 2, 3 and 4  (test map)
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_1:
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_1:
                         selectedWorld = world_level1
+
                         level_1 = True
+                        player.pos = pg.math.Vector2(player_starting_position)
+                        player.rect.topleft = player_starting_position
+                        player.vel = pg.math.Vector2(0, 0)
+                        player.on_ground = False
 
-                    if event.key == pygame.K_2:
-                        selectedWorld = world_level2
-                        level_1 = False
-                        level_2 = True
+                        solids.empty()
+                        rects = (tuple(x) for x in level1Solids)
+                        
+                        for rect in rects:  # Create the walls/platforms.
+                            block = Solids(pg.Rect(rect))
+                            all_sprites.add(block)
+                            solids.add(block)
+                    if event.key == pg.K_2:
+                        selectedWorld = world_level2                   
+                        level_1=False
+                        level_2=True
+                        player.pos = pg.math.Vector2(player_starting_position)
+                        player.rect.topleft = player_starting_position
+                        player.vel = pg.math.Vector2(0, 0)
+                        player.on_ground = False
 
-                    if event.key == pygame.K_3:
+                        solids.empty()
+                        for rect in rects:  # Create the walls/platforms.
+                            rect.fill(255,255,255,0)
+
+                        rects = (tuple(x) for x in level2Solids)
+        
+                        for rect in rects:  # Create the walls/platforms.
+                            block = Solids(pg.Rect(rect))
+                            all_sprites.add(block)
+                            solids.add(block)
+                    if event.key == pg.K_3:
                         selectedWorld = world_level3
-                        level_2 = False
+                        level_2=False
+                        player.pos = pg.math.Vector2(player_starting_position)
+                        player.rect.topleft = player_starting_position
+                        player.vel = pg.math.Vector2(0, 0)
+                        player.on_ground = False
 
-                    if event.key == pygame.K_4:
+                        solids.empty()
+
+                        rects = (tuple(x) for x in level3Solids)
+        
+                        for rect in rects:  # Create the walls/platforms.
+                            block = Solids(pg.Rect(rect))
+                            all_sprites.add(block)
+                            solids.add(block)
+
+                    if event.key == pg.K_4:
                         selectedWorld = world
+                        player.pos = pg.math.Vector2(player_starting_position)
+                        player.rect.topleft = player_starting_position
+                        player.vel = pg.math.Vector2(0, 0)
+                        player.on_ground = False
+                    if event.key == pg.K_a:
+                        player.vel.x = -220
+                    elif event.key == pg.K_d:
+                        player.vel.x = 220
+                    elif event.key == pg.K_SPACE:  # Jump
+                        if player.on_ground:
+                            player.vel.y = -470
+                            player.pos.y -= 20
+                            player.on_ground = False
+                    if event.key == pg.K_f:  # Fire a bullet
+                        bullet = Bullet(player.rect.midright, 1, damage=10)  # Pass damage value
+                        bullets.add(bullet)
+                        all_sprites.add(bullet)
+                elif event.type == pg.KEYUP:
+                    if event.key == pg.K_a and player.vel.x < 0:
+                        player.vel.x = 0
+                    elif event.key == pg.K_d and  player.vel.x > 0:
+                        player.vel.x = 0
+                    # Remove bullets that go off-scre
+            all_sprites.update(dt)
+            
+            """hits = pg.sprite.spritecollide(player, solid, False)
+            for solid in hits:  # Iterate over the collided platforms.
+                if player.vel.y > 0:  # We're falling.
+                    player.rect.bottom = solid.rect.top
+                    player.vel.y = 0
+                elif player.vel.y < 0:  # We're jumping.
+                    player.rect.top = solid.rect.bottom
+                    player.vel.y = 3
 
-            pygame.display.update()
-            self.clock.tick(60)
+                player.pos.y = player.rect.bottom"""
+            for bullet in bullets.copy():
+                if bullet.rect.right > SCREEN_WIDTH:
+                    bullets.remove(bullet)
+                    all_sprites.remove(bullet)
+            bullet_solids = pg.sprite.groupcollide(bullets, solids, True, False)
+            for bullet in bullet_solids:
+                bullet.kill
+
+    
+            all_sprites.update(dt)
+            all_sprites.draw(screen)            
+            pg.display.flip()
+            dt = self.clock.tick(60) / 1000
 
 Game()
