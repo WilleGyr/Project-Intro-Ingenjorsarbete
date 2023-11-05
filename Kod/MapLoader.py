@@ -210,3 +210,11 @@ class World():
 		for tile in self.tile_list:
 			# Renders the tile at its specified position
 			game.screen.blit(tile[0], tile[1])
+
+
+class Solids(pygame.sprite.Sprite):
+	def __init__(self, rect):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = pygame.Surface(rect.size)
+		self.image.fill(pygame.Color(0,0,0,1))
+		self.rect = rect
