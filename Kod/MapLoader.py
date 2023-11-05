@@ -214,7 +214,8 @@ class World():
 
 class Solids(pygame.sprite.Sprite):
 	def __init__(self, rect):
+		transparent = pygame.image.load("Data_files/images/Transparent.png")
 		pygame.sprite.Sprite.__init__(self)
 		self.image = pygame.Surface(rect.size)
-		self.image.fill(pygame.Color(0,0,0,1))
+		self.image = pygame.transform.scale(transparent, (20, 20))
 		self.rect = rect
