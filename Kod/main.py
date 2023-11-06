@@ -127,7 +127,11 @@ class Game:
 
                 # Se om man tagit sig till slutet och ladda in nästa karta
             if level_1:
+                if not enemy1_alive:
+                    enemies.empty()
+
                 if player.rect.x > 1210:
+                    
                     selectedWorld = world_level2                   
                     level_1=False
                     level_2=True
@@ -145,6 +149,7 @@ class Game:
                         block = Solids(pg.Rect(rect))
                         all_sprites.add(block)
                         solids.add(block)
+                
                 if player.rect.y > 650:
                     pg.quit()
                     Game()
@@ -169,6 +174,9 @@ class Game:
                 enemies.add(enemy)
                 # Se om man tagit sig till slutet och ladda in nästa karta
             if level_2:
+                if not enemy2_alive:
+                    enemies.empty()
+
                 if player.rect.x > 1210:
                     selectedWorld = world_level3
                     level_1=False
@@ -212,6 +220,9 @@ class Game:
                 enemies.add(enemy)
 
             if level_3:
+                if not enemy3_alive:
+                    enemies.empty()
+
             # Spelet är klart och det stängs då ner
                 if player.rect.y > 650:
                     pg.quit()
