@@ -290,7 +290,7 @@ class Game:
                     # Omstart
                     elif event.key == pg.K_r: 
                         pg.quit()
-                        game()
+                        Game()
                 # Återställer värden på spelaren så att den blir statisk när man släpper knapparna        
                 elif event.type == pg.KEYUP:
                     if event.key == pg.K_a and player.vel.x < 0:
@@ -314,7 +314,7 @@ class Game:
 
             # Kollision mellan player och enemies
             collision = pg.sprite.spritecollide(player, enemies, False)
-            for enemy in collisions:
+            for enemy in collision:
                 pg.quit()
                 Game()
 
