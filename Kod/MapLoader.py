@@ -56,6 +56,8 @@ class World():
 					
 					# Adds the tile to the tile list
 					self.tile_list.append(tile)
+
+					# Adds the tile to a list of solid blocks. Repeats only for the other tiles that we consider solid blocks
 					self.solid_list.append((img_rect.x, img_rect.y))
 					# Repeats for every image
 				if tile == 2:
@@ -203,7 +205,7 @@ class World():
 			row_count += 1
 
 	def return_list(self):
-		return self.solid_list
+		return self.solid_list	# Returns the list of solid objects
 
 	def draw(self, game):
 		# Goes through every tile in the tile list
@@ -214,8 +216,8 @@ class World():
 
 class Solids(pygame.sprite.Sprite):
 	def __init__(self, rect):
-		transparent = pygame.image.load("Data_files/images/Transparent.png") # Imports a transparent image.
-		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.Surface(rect.size)
-		self.image = pygame.transform.scale(transparent, (20, 20)) # Sets the rectangle to transparent
-		self.rect = rect
+		transparent = pygame.image.load("Data_files/images/Transparent.png")	# Imports transparent a image
+		pygame.sprite.Sprite.__init__(self)	# Initialize a sprite object
+		self.image = pygame.Surface(rect.size)	# Create a new surface for the sprite with the same size as 'rect'
+		self.image = pygame.transform.scale(transparent, (20, 20))	# Set the sprite's image to the loaded transparent image, scaled to (20, 20) pixels
+		self.rect = rect	# Set the sprite's rectangle to the provided 'rect'
