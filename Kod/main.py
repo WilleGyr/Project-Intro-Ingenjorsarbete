@@ -9,8 +9,8 @@ from cloud import Cloud
 
 class Game:
     def __init__(self):
-        pg.init()                           # Initialises pg
-        pg.display.set_caption("Not Mario") # Sets display name 
+        pg.init()                            # Initialises pg
+        pg.display.set_caption("Platformer") # Sets display name 
 
         SCREEN_WIDTH = 1280 #
         SCREEN_HEIGHT = 720 # Sets constants
