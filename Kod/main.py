@@ -225,16 +225,11 @@ class Game:
                     pg.quit()
                     sys.exit()                
 
-            
-            # Spelet är klart och det stängs då ner
-
-            #
+            # Du har ramlat ner
             if player.rect.y > 650:
                 pg.quit()
                 Game()
             
-
-
             for event in pg.event.get():
                 
                 # Gör så att koden avslutas när spelet stängs ner
