@@ -41,11 +41,3 @@ class Enemy(pygame.sprite.Sprite):
                 surf.blit(img, pos)
             else:
                 surf.blit(rev_img, pos)
-
-    def get_hitbox(self, e_type, pos):
-        if e_type == 1:
-            return pygame.Rect((pos[0], pos[1]), (6*6, 4*15))
-        elif e_type == 2:
-            return pygame.Rect((pos[0], pos[1]), (8*6, 5*15))
-        else:
-            return pygame.Rect((pos[0], pos[1]), (14*6, 8*15))
