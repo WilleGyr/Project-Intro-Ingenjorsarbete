@@ -5,19 +5,20 @@ from pygame.locals import *
 from enemies import Enemy
 from MapLoader import World, Solids
 from player import Player, Bullet
-from cloud import Cloud
 
 class Game:
     def __init__(self):
-        pg.init()                            # Initialises pg
-        pg.display.set_caption("Platformer") # Sets display name 
+        pg.init()                          
+        pg.display.set_caption("Platformer") 
 
-        SCREEN_WIDTH = 1280 #
-        SCREEN_HEIGHT = 720 # Sets constants
+        SCREEN_WIDTH = 1280 
+        SCREEN_HEIGHT = 720 
 
+        # Första banan startas
         level_1 = True
         level_2 = False
 
+        # Öppnar filerna som kommer användas för att få grafik i spelet
         with open ("tilemaps/testmap.json", "r") as file4: 
             testmap = json.load(file4)
                     
@@ -30,6 +31,7 @@ class Game:
         with open ("tilemaps/level3.json", "r") as file3: # Imports the world maps - consider moving to maploader.py?
             level3 = json.load(file3)
         
+        # Innehåller filerna med blocken man kan stå på, används till att kolla kollision mellan andra sprites
         with open ("solids/solidsLevel1.json", "r") as file:
             level1Solids = json.load(file)
 
@@ -39,19 +41,21 @@ class Game:
         with open ("solids/solidsLevel3.json", "r") as file:
             level3Solids = json.load(file)
 
-        bg = pg.image.load("Data_files/images/himmel.png") # Sets background
+
+        bg = pg.image.load("Data_files/images/himmel.png") # Bakgrundsbilden
 
         screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-        player_starting_position = (20, 490)
+        # Startar alltid på samma ställe i alla banor, därför behövs bara ett startställe
+        player_starting_position = (20, 490) 
 
+        # Alla sprites som kommer behövas när kollision sker
         all_sprites = pg.sprite.Group()
         bullets = pg.sprite.Group()
         solids = pg.sprite.Group()
         enemies = pg.sprite.Group()
-        player = Player(player_starting_position, solids)
+        player = Player(player_starting_position,solids) # Kollisionen mellan spelare och solida blocks sker i player.py
         all_sprites.add(player)
-
 
         self.screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) # Sets window size
 
@@ -60,28 +64,29 @@ class Game:
 
         level_solids = [level1Solids, level2Solids, level3Solids]
 
+        # Gör om informationen från deras json filer till att ha fyra värden samt gör dem till en tuple så att de ska funka som rects
         for level_solid in level_solids:
             for i in level_solid:
                 i.append(20)
                 i.append(20)
 
+
+        # Skapas för första banan, kan göras till en funktion då den används flera gånger
         rects = (tuple(x) for x in level1Solids)
         
-        for rect in rects:  # Create the walls/platforms.
+        for rect in rects: 
             block = Solids(pg.Rect(rect))
             all_sprites.add(block)
             solids.add(block)
 
-        world_level1 = World(level1) #
-        world_level2 = World(level2) #
-        world_level3 = World(level3) # Sets worlds as variables using World() class 
+        # Berättar vilken fil som ska laddas in vid varje värld
+        world_level1 = World(level1) 
+        world_level2 = World(level2) 
+        world_level3 = World(level3) 
 
-        selectedWorld = world_level1 # Selects starting world
+        selectedWorld = world_level1 #Startvärld
 
-
-        n = 0
-        k = 0
-
+        # Berättar vart varje fiende befinner sig vid start
         self.loc1 = [1050, 540]
         self.dir1 = True
 
@@ -91,21 +96,14 @@ class Game:
         self.loc3 = [1050, 440]
         self.dir3 = True
 
-        enemy1_col = Enemy.get_hitbox(Enemy(), 1, self.loc1)
-        enemy2_col = Enemy.get_hitbox(Enemy(), 2, self.loc2)
-        enemy3_col = Enemy.get_hitbox(Enemy(), 3, self.loc3)
-
+        enemy_alive = True
 
         while True:
             self.screen.blit(bg, (0, 0)) # Sets the bakground image 
             selectedWorld.draw(self) # Renders the selected world
-            #Cloud.cloud(Cloud(k),self.screen.blit, n, k)
-            #if n % 30 == 0:
-            #    k = 1 - k
-            #    n = 0
-            #n += 1
 
             if level_1:
+                # Sköter platsen där fienden befinner sig och att den vänder sig om vid en viss kordinat
                 if self.loc1[0] < 1135 and self.dir1:
                     self.loc1[0] = self.loc1[0] + 1
                     Enemy.render_enemy(Enemy(), self.screen, 1, self.loc1, self.dir1)
@@ -118,7 +116,33 @@ class Game:
                 elif self.loc1[0] == 830 and not self.dir1:
                     self.dir1 = True
 
+                # enemies spriten uppdateras varje frame för att kollisionen ska kunna kollas i varje frame
+                enemies.empty()
+                enemy = Solids(pg.Rect(self.loc1[0], self.loc1[1] - 4*15,6*6,4*15))
+                all_sprites.add(enemy)
+                enemies.add(enemy)
+
+                # Se om man tagit sig till slutet och ladda in nästa karta
+                if player.rect.x > 1210:
+                    selectedWorld = world_level2                   
+                    level_1=False
+                    level_2=True
+                    player.pos = pg.math.Vector2(player_starting_position)
+                    player.rect.topleft = player_starting_position
+                    player.vel = pg.math.Vector2(0, 0)
+                    player.on_ground = False
+
+                    solids.empty()
+
+                    rects = (tuple(x) for x in level2Solids)
+    
+                    for rect in rects: 
+                        block = Solids(pg.Rect(rect))
+                        all_sprites.add(block)
+                        solids.add(block)
+
             elif level_2:
+                # Sköter platsen där fienden befinner sig och att den vänder sig om vid en viss kordinat
                 if self.loc2[0] < 1045 and self.dir2:
                     self.loc2[0] = self.loc2[0] + 1
                     Enemy.render_enemy(Enemy(), self.screen, 2, self.loc2, self.dir2)
@@ -131,7 +155,32 @@ class Game:
                 elif self.loc2[0] == 865 and not self.dir2:
                     self.dir2 = True
 
+                enemies.empty()
+                enemy = Solids(pg.Rect(self.loc2[0], self.loc2[1] - 5*15, 8*6 ,5*15))
+                all_sprites.add(enemy)
+                enemies.add(enemy)
+                # Se om man tagit sig till slutet och ladda in nästa karta
+                if player.rect.x > 1210:
+                    selectedWorld = world_level3
+                    level_1=False
+                    level_2=False
+                    player.pos = pg.math.Vector2(player_starting_position)
+                    player.rect.topleft = player_starting_position
+                    player.vel = pg.math.Vector2(0, 0)
+                    player.on_ground = False
+
+                    solids.empty()
+
+                    rects = (tuple(x) for x in level3Solids)
+    
+                    for rect in rects:
+                        block = Solids(pg.Rect(rect))
+                        all_sprites.add(block)
+                        solids.add(block)                  
+
+
             else:
+                # Sköter platsen där fienden befinner sig och att den vänder sig om vid en viss kordinat
                 if self.loc3[0] < 1100 and self.dir3:
                     self.loc3[0] = self.loc3[0] + 1
                     Enemy.render_enemy(Enemy(), self.screen, 3, self.loc3, self.dir3)
@@ -144,15 +193,31 @@ class Game:
                 elif self.loc3[0] == 955 and not self.dir3:
                     self.dir3 = True
 
-
-            for event in pg.event.get():
-
-                if event.type == pg.QUIT: # Exits the application if the window close button is pressed
+                enemies.empty()
+                enemy = Solids(pg.Rect(self.loc3[0], self.loc3[1] - 8*15, 14*6, 8*15))
+                all_sprites.add(enemy)
+                enemies.add(enemy)
+                
+                #Dör om man faller ner
+                if player.rect.x > 1210:
                     pg.quit()
                     sys.exit()
-                    
-                # Changes the map between level 1, 2, 3 and 4  (test map)
+
+            # Spelet är klart och det stängs då ner
+            if player.rect.y > 650:
+                pg.quit()
+                Game()
+
+
+            for event in pg.event.get():
+                
+                # Gör så att koden avslutas när spelet stängs ner
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    sys.exit()
+
                 elif event.type == pg.KEYDOWN:
+                    # Gör så att man kan byta bana när man trycker på 1, 2, 3. Skulle kunna tas bort om man vill ge spelet till någon annan
                     if event.key == pg.K_1:
                         selectedWorld = world_level1
 
@@ -169,6 +234,8 @@ class Game:
                             block = Solids(pg.Rect(rect))
                             all_sprites.add(block)
                             solids.add(block)
+
+
                     if event.key == pg.K_2:
                         selectedWorld = world_level2                   
                         level_1=False
@@ -179,17 +246,16 @@ class Game:
                         player.on_ground = False
 
                         solids.empty()
-                        for rect in rects:  # Create the walls/platforms.
-                            rect.fill(255,255,255,0)
 
                         rects = (tuple(x) for x in level2Solids)
         
-                        for rect in rects:  # Create the walls/platforms.
+                        for rect in rects: 
                             block = Solids(pg.Rect(rect))
                             all_sprites.add(block)
                             solids.add(block)
                     if event.key == pg.K_3:
                         selectedWorld = world_level3
+                        level_1=False
                         level_2=False
                         player.pos = pg.math.Vector2(player_starting_position)
                         player.rect.topleft = player_starting_position
@@ -200,44 +266,63 @@ class Game:
 
                         rects = (tuple(x) for x in level3Solids)
         
-                        for rect in rects:  # Create the walls/platforms.
+                        for rect in rects: 
                             block = Solids(pg.Rect(rect))
                             all_sprites.add(block)
                             solids.add(block)
 
+                    # uppdaterar värden i player så att den ska kunna röra på sig
                     if event.key == pg.K_a:
                         player.vel.x = -220
                     elif event.key == pg.K_d:
                         player.vel.x = 220
-                    elif event.key == pg.K_SPACE:  # Jump
+                    elif event.key == pg.K_SPACE: 
                         if player.on_ground:
                             player.vel.y = -470
                             player.pos.y -= 20
                             player.on_ground = False
-                    if event.key == pg.K_f:  # Fire a bullet
-                        bullet = Bullet(player.rect.midright, 1, damage=10)  # Pass damage value
+                    # När bulletklassen körs läggs alla bullets in i bullet spriten        
+                    elif event.key == pg.K_f:  
+                        bullet = Bullet(player.rect.midright, 1)
                         bullets.add(bullet)
                         all_sprites.add(bullet)
+                    
+                    # Omstart
+                    elif event.key == pg.K_r: 
+                        pg.quit()
+                        game()
+                # Återställer värden på spelaren så att den blir statisk när man släpper knapparna        
                 elif event.type == pg.KEYUP:
                     if event.key == pg.K_a and player.vel.x < 0:
                         player.vel.x = 0
                     elif event.key == pg.K_d and  player.vel.x > 0:
                         player.vel.x = 0
-                    # Remove bullets that go off-scre
+            # Uppdaterar alla sprites varje frame
             all_sprites.update(dt)
 
-            for bullet in bullets.copy():
-                if bullet.rect.right > SCREEN_WIDTH:
-                    bullets.remove(bullet)
-                    all_sprites.remove(bullet)
+            # Ta bort bullet vid kollision med solids
             bullet_solids = pg.sprite.groupcollide(bullets, solids, True, False)
             for bullet in bullet_solids:
                 bullet.kill
 
-    
-            all_sprites.update(dt)
+            # Samma sak vid kollision med enemy
+            bullet_enemies = pg.sprite.groupcollide(bullets, enemies, True, False)
+            for hit in bullet_enemies:
+                bullet.kill
+                if enemy_alive:
+                    pass
+
+            # Kollision mellan player och enemies
+            collision = pg.sprite.spritecollide(player, enemies, False)
+            for enemy in collisions:
+                pg.quit()
+                Game()
+
+            # Gör så att alla sprites är på sin nya position
             all_sprites.draw(screen)            
             pg.display.flip()
+
+            # Gör så att spelet fungerar på samma sätt oavsätt fps
             dt = self.clock.tick(60) / 1000
 
 Game()
