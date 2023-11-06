@@ -19,6 +19,9 @@ class Game:
         level_2 = False
         level_3 = False
 
+
+        score = 0
+
         # Öppnar filerna som kommer användas för att få grafik i spelet
         with open ("tilemaps/testmap.json", "r") as file4: 
             testmap = json.load(file4)
@@ -127,6 +130,7 @@ class Game:
 
                 # Se om man tagit sig till slutet och ladda in nästa karta
             if level_1:
+
                 if not enemy1_alive:
                     enemies.empty()
 
@@ -149,10 +153,7 @@ class Game:
                         block = Solids(pg.Rect(rect))
                         all_sprites.add(block)
                         solids.add(block)
-                
-                if player.rect.y > 650:
-                    pg.quit()
-                    Game()
+
 
             elif level_2 and enemy2_alive:
                 # Sköter platsen där fienden befinner sig och att den vänder sig om vid en viss kordinat
@@ -194,10 +195,7 @@ class Game:
                     for rect in rects:
                         block = Solids(pg.Rect(rect))
                         all_sprites.add(block)
-                        solids.add(block) 
-                if player.rect.y > 650:
-                    pg.quit()
-                    Game()                
+                        solids.add(block)           
 
 
             elif level_3 and enemy3_alive:
@@ -223,15 +221,17 @@ class Game:
                 if not enemy3_alive:
                     enemies.empty()
 
-            # Spelet är klart och det stängs då ner
-                if player.rect.y > 650:
+                if player.rect.x > 1210:
                     pg.quit()
-                    Game()
+                    sys.exit()                
 
-            #Dör om man faller ner
-            if player.rect.x > 1210:
+            
+            # Spelet är klart och det stängs då ner
+
+            #
+            if player.rect.y > 650:
                 pg.quit()
-                sys.exit()
+                Game()
             
 
 
@@ -336,6 +336,7 @@ class Game:
             bullet_enemies = pg.sprite.groupcollide(bullets, enemies, True, False)
             for hit in bullet_enemies:
                 bullet.kill
+                score += 1
                 if level_1:
                     if enemy1_alive:
                         enemy1_alive = False
@@ -349,8 +350,10 @@ class Game:
             # Kollision mellan player och enemies
             collision = pg.sprite.spritecollide(player, enemies, False)
             for enemy in collision:
+                score = 0
                 pg.quit()
                 Game()
+
 
             # Gör så att alla sprites är på sin nya position
             all_sprites.draw(screen)            
