@@ -14,11 +14,11 @@
   - [x] Level 2
   - [x] Level 3
 - [ ] Enemies
-  - [ ] Enemy 1
+  - [x] Enemy 1
   - [ ] Enemy 2
 - [ ] Boss
 - [ ] Player
-  - [ ] Movement
+  - [x] Movement
   - [ ] Gun
 
 (_Optional_)
