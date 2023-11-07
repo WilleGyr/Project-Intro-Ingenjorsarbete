@@ -158,13 +158,13 @@ class Game:
             elif level_2 and enemy2_alive:
                 # Sköter platsen där fienden befinner sig och att den vänder sig om vid en viss kordinat
                 if self.loc2[0] < 1045 and self.dir2:
-                    self.loc2[0] = self.loc2[0] + 1
+                    self.loc2[0] = self.loc2[0] + 2
                     Enemy.render_enemy(Enemy(), self.screen, 2, self.loc2, self.dir2)
                 elif self.loc2[0] == 1045 and self.dir2:
                     self.dir2 = False
                 
                 if self.loc2[0] > 865 and not self.dir2:
-                    self.loc2[0] = self.loc2[0] - 1
+                    self.loc2[0] = self.loc2[0] - 2
                     Enemy.render_enemy(Enemy(), self.screen, 2, self.loc2, self.dir2)
                 elif self.loc2[0] == 865 and not self.dir2:
                     self.dir2 = True
@@ -201,13 +201,13 @@ class Game:
             elif level_3 and enemy3_alive:
                 # Sköter platsen där fienden befinner sig och att den vänder sig om vid en viss kordinat
                 if self.loc3[0] < 1100 and self.dir3:
-                    self.loc3[0] = self.loc3[0] + 1
+                    self.loc3[0] = self.loc3[0] + 0.5
                     Enemy.render_enemy(Enemy(), self.screen, 3, self.loc3, self.dir3)
                 elif self.loc3[0] == 1100 and self.dir3:
                     self.dir3 = False
                     
                 if self.loc3[0] > 955 and not self.dir3:
-                    self.loc3[0] = self.loc3[0] - 1
+                    self.loc3[0] = self.loc3[0] - 0.5
                     Enemy.render_enemy(Enemy(), self.screen, 3, self.loc3, self.dir3)
                 elif self.loc3[0] == 955 and not self.dir3:
                     self.dir3 = True
