@@ -157,16 +157,16 @@ class Game:
 
             elif level_2 and enemy2_alive:
                 # Sköter platsen där fienden befinner sig och att den vänder sig om vid en viss kordinat
-                if self.loc2[0] < 1045 and self.dir2:
+                if self.loc2[0] < 1046 and self.dir2:
                     self.loc2[0] = self.loc2[0] + 2
                     Enemy.render_enemy(Enemy(), self.screen, 2, self.loc2, self.dir2)
-                elif self.loc2[0] == 1045 and self.dir2:
+                elif self.loc2[0] == 1046 and self.dir2:
                     self.dir2 = False
                 
-                if self.loc2[0] > 865 and not self.dir2:
+                if self.loc2[0] > 866 and not self.dir2:
                     self.loc2[0] = self.loc2[0] - 2
                     Enemy.render_enemy(Enemy(), self.screen, 2, self.loc2, self.dir2)
-                elif self.loc2[0] == 865 and not self.dir2:
+                elif self.loc2[0] == 866 and not self.dir2:
                     self.dir2 = True
 
                 enemies.empty()
